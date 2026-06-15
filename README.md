@@ -221,7 +221,7 @@ Same masquerading pattern as #2, but renamed as `update.exe` and run from `Downl
 - ✅ Incident documentation written for handoff/escalation
 
 ---
-
+![Dashboard overview](screenshots/03-dashboard-overview.webp)
 ## 🗂️ Repository Structure
 
 ```
