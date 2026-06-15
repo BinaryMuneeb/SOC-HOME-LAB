@@ -125,10 +125,10 @@ Runs Mimikatz **reflectively inside PowerShell** (`sekurlsa::logonpasswords`) to
 | **Trigger** | `powershell.exe` writing a script to `%TEMP%` |
 
 📸 *Attack output:*
-![Mimikatz execution](screenshots/01-t1003-mimikatz-output.png)
+![Mimikatz execution](screenshots/01-t1003-mimikatz-output.webp)
 
 📸 *Wazuh alert detail:*
-![Level 15 alert T1105](screenshots/02-alert-level15-T1105.png)
+![Level 15 alert T1105](screenshots/02-alert-level15-T1105.webp)
 
 > **🕳️ Detection Gap Found:** Because Mimikatz ran in-process, the *actual* credential theft (LSASS memory access) would appear as Sysmon **Event ID 10 (ProcessAccess)** — but a search for `data.win.system.eventID: 10` returned **zero results**. The SwiftOnSecurity config excludes this event by default.
 >
@@ -152,13 +152,13 @@ A copy of `cmd.exe` renamed to mimic a trusted system process and run from a wor
 | **Key Indicator** | `originalFileName: Cmd.Exe` ≠ `image: C:\Users\Public\svchost.exe` |
 
 📸 *Attack output:*
-![svchost masquerade output](screenshots/04-svchost-masquerade-cmd-output.png)
+![svchost masquerade output](screenshots/04-svchost-masquerade-cmd-output.webp)
 
 📸 *Process metadata mismatch:*
-![svchost field details](screenshots/05-alert-svchost-fields.png)
+![svchost field details](screenshots/05-alert-svchost-fields.webp)
 
 📸 *Wazuh alert detail:*
-![Level 12 alert T1055](screenshots/06-alert-level12-T1055.png)
+![Level 12 alert T1055](screenshots/06-alert-level12-T1055.webp)
 
 > **🧩 Analysis:** Sysmon captured the parent process (`powershell.exe`, **High** integrity), full file hashes (MD5/SHA256), and the PE-internal `originalFileName` — which doesn't match the on-disk filename. This mismatch is one of the most reliable masquerading signatures available.
 >
@@ -182,13 +182,13 @@ Same masquerading pattern as #2, but renamed as `update.exe` and run from `Downl
 | **Trigger** | Command shell (renamed `cmd.exe`) spawned by `powershell.exe` from a user download directory |
 
 📸 *Attack output:*
-![update.exe output](screenshots/07-update-exe-cmd-output.png)
+![update.exe output](screenshots/07-update-exe-cmd-output.webp)
 
 📸 *Field details:*
-![update.exe fields](screenshots/08-alert-update-exe-fields.png)
+![update.exe fields](screenshots/08-alert-update-exe-fields.webp)
 
 📸 *Wazuh alert detail:*
-![Level 4 alert T1059](screenshots/09-alert-level4-T1059.png)
+![Level 4 alert T1059](screenshots/09-alert-level4-T1059.webp)
 
 > **🔗 Correlation:** On its own this is low severity — but combined with alert #2 (same masquerading technique, same parent), it forms a **strong composite indicator**: repeated renamed-`cmd.exe` executions from user-writable paths, spawned by PowerShell. This pattern alone should justify escalation and host isolation.
 
@@ -206,7 +206,7 @@ Same masquerading pattern as #2, but renamed as `update.exe` and run from `Downl
 **Top MITRE techniques observed:** Ingress Tool Transfer · Account Discovery · Lateral Tool Transfer · PowerShell · Windows Command Shell · Disable/Modify Tools
 
 📸 *Endpoint status — agent active and reporting:*
-![Agent active](screenshots/10-agent-active-overview.png)
+![Agent active](screenshots/10-agent-active-overview.webp)
 
 ---
 
@@ -228,16 +228,16 @@ Same masquerading pattern as #2, but renamed as `update.exe` and run from `Downl
 soc-home-lab/
 ├── README.md
 └── screenshots/
-    ├── 01-t1003-mimikatz-output.png
-    ├── 02-alert-level15-T1105.png
-    ├── 03-dashboard-overview.png
-    ├── 04-svchost-masquerade-cmd-output.png
-    ├── 05-alert-svchost-fields.png
-    ├── 06-alert-level12-T1055.png
-    ├── 07-update-exe-cmd-output.png
-    ├── 08-alert-update-exe-fields.png
-    ├── 09-alert-level4-T1059.png
-    └── 10-agent-active-overview.png
+    ├── 01-t1003-mimikatz-output.webp
+    ├── 02-alert-level15-T1105.webp
+    ├── 03-dashboard-overview.webp
+    ├── 04-svchost-masquerade-cmd-output.webp
+    ├── 05-alert-svchost-fields.webp
+    ├── 06-alert-level12-T1055.webp
+    ├── 07-update-exe-cmd-output.webp
+    ├── 08-alert-update-exe-fields.webp
+    ├── 09-alert-level4-T1059.webp
+    └── 10-agent-active-overview.webp
 ```
 
 ---
